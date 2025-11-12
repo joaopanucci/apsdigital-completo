@@ -1,0 +1,731 @@
+/* ==========================================================================
+   APS Digital - Authentication CSS
+   Secretaria de Estado de Saúde de Mato Grosso do Sul (SES-MS)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Variables
+   ========================================================================== */
+
+:root {
+    /* SES-MS Brand Colors */
+    --ses-primary: #004F9F;
+    --ses-secondary: #2a80dc;
+    --ses-success: #28a745;
+    --ses-danger: #dc3545;
+    --ses-warning: #ffc107;
+    --ses-info: #17a2b8;
+    --ses-light: #f8f9fa;
+    --ses-dark: #343a40;
+    
+    /* Authentication Specific */
+    --auth-bg: linear-gradient(135deg, var(--ses-primary) 0%, var(--ses-secondary) 100%);
+    --auth-card-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    --auth-transition: all 0.3s ease;
+    --auth-border-radius: 16px;
+    
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ==========================================================================
+   2. Base Styles
+   ========================================================================== */
+
+body {
+    font-family: var(--font-family);
+    background: var(--auth-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    animation: backgroundMove 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundMove {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+/* ==========================================================================
+   3. Authentication Container
+   ========================================================================== */
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-card {
+    background: white;
+    border-radius: var(--auth-border-radius);
+    box-shadow: var(--auth-card-shadow);
+    overflow: hidden;
+    border: none;
+    position: relative;
+    animation: cardSlideIn 0.6s ease-out;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================================================
+   4. Authentication Header
+   ========================================================================== */
+
+.auth-header {
+    background: linear-gradient(135deg, var(--ses-primary) 0%, var(--ses-secondary) 100%);
+    color: white;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: headerFloat 15s ease-in-out infinite;
+}
+
+.auth-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -30%;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    animation: headerFloat 12s ease-in-out infinite reverse;
+}
+
+@keyframes headerFloat {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(20px, -20px);
+    }
+}
+
+.auth-header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 0.75rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   5. Authentication Body
+   ========================================================================== */
+
+.auth-body {
+    padding: 2.5rem 2rem;
+    background: white;
+}
+
+/* Form Labels */
+.auth-body .form-label {
+    font-weight: 500;
+    color: var(--ses-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.auth-body .form-label i {
+    margin-right: 0.5rem;
+    color: var(--ses-primary);
+    width: 16px;
+    text-align: center;
+}
+
+/* Form Controls */
+.auth-body .form-control,
+.auth-body .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+    transition: var(--auth-transition);
+    background: #fafafa;
+}
+
+.auth-body .form-control:focus,
+.auth-body .form-select:focus {
+    border-color: var(--ses-secondary);
+    box-shadow: 0 0 0 0.2rem rgba(42, 128, 220, 0.15);
+    background: white;
+    transform: translateY(-1px);
+}
+
+.auth-body .form-control:hover,
+.auth-body .form-select:hover {
+    border-color: #c0c4c7;
+    background: white;
+}
+
+.auth-body .form-control.is-invalid {
+    border-color: var(--ses-danger);
+    background: rgba(220, 53, 69, 0.05);
+}
+
+.auth-body .form-control.is-valid {
+    border-color: var(--ses-success);
+    background: rgba(40, 167, 69, 0.05);
+}
+
+/* Input Groups */
+.auth-body .input-group-text {
+    border: 2px solid #e9ecef;
+    border-right: none;
+    background: #f8f9fa;
+    color: var(--ses-dark);
+    font-weight: 500;
+    border-radius: 10px 0 0 10px;
+}
+
+.auth-body .input-group .form-control {
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.auth-body .input-group:focus-within .input-group-text {
+    border-color: var(--ses-secondary);
+    background: rgba(42, 128, 220, 0.1);
+    color: var(--ses-primary);
+}
+
+/* ==========================================================================
+   6. Buttons
+   ========================================================================== */
+
+.auth-body .btn-primary {
+    background: linear-gradient(135deg, var(--ses-primary) 0%, var(--ses-secondary) 100%);
+    border-color: var(--ses-primary);
+    border-radius: 10px;
+    padding: 0.875rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: var(--auth-transition);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 79, 159, 0.2);
+}
+
+.auth-body .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.auth-body .btn-primary:hover {
+    background: linear-gradient(135deg, var(--ses-secondary) 0%, var(--ses-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 79, 159, 0.3);
+}
+
+.auth-body .btn-primary:hover::before {
+    left: 100%;
+}
+
+.auth-body .btn-primary:active {
+    transform: translateY(0);
+}
+
+.auth-body .btn-primary:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.auth-body .btn-link {
+    color: var(--ses-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--auth-transition);
+    position: relative;
+}
+
+.auth-body .btn-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--ses-secondary);
+    transition: width 0.3s ease;
+}
+
+.auth-body .btn-link:hover {
+    color: var(--ses-secondary);
+    transform: translateY(-1px);
+}
+
+.auth-body .btn-link:hover::after {
+    width: 100%;
+}
+
+/* ==========================================================================
+   7. Form Check (Checkbox/Radio)
+   ========================================================================== */
+
+.auth-body .form-check {
+    margin: 1.5rem 0;
+}
+
+.auth-body .form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    transition: var(--auth-transition);
+}
+
+.auth-body .form-check-input:checked {
+    background-color: var(--ses-primary);
+    border-color: var(--ses-primary);
+    box-shadow: 0 2px 8px rgba(0, 79, 159, 0.3);
+}
+
+.auth-body .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(42, 128, 220, 0.25);
+}
+
+.auth-body .form-check-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   8. Alerts
+   ========================================================================== */
+
+.auth-body .alert {
+    border-radius: 10px;
+    border: none;
+    font-size: 0.875rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: alertSlideIn 0.4s ease-out;
+}
+
+@keyframes alertSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-body .alert-danger {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
+    color: var(--ses-danger);
+    border-left: 4px solid var(--ses-danger);
+}
+
+.auth-body .alert-success {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(32, 201, 151, 0.05) 100%);
+    color: var(--ses-success);
+    border-left: 4px solid var(--ses-success);
+}
+
+.auth-body .alert-warning {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(243, 156, 18, 0.05) 100%);
+    color: #856404;
+    border-left: 4px solid var(--ses-warning);
+}
+
+.auth-body .alert-info {
+    background: linear-gradient(135deg, rgba(23, 162, 184, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
+    color: var(--ses-info);
+    border-left: 4px solid var(--ses-info);
+}
+
+/* ==========================================================================
+   9. Authentication Footer
+   ========================================================================== */
+
+.auth-footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+    border-top: 1px solid #dee2e6;
+}
+
+.auth-footer strong {
+    color: var(--ses-dark);
+    font-weight: 600;
+}
+
+.auth-footer i {
+    color: var(--ses-primary);
+    margin-right: 0.25rem;
+}
+
+.auth-footer hr {
+    border-top: 1px solid #dee2e6;
+    margin: 1.5rem 0;
+    opacity: 0.5;
+}
+
+.auth-footer .row {
+    margin: 0;
+}
+
+.auth-footer .col-6 {
+    padding: 0.5rem;
+}
+
+/* ==========================================================================
+   10. Loading States
+   ========================================================================== */
+
+.loading {
+    display: none;
+}
+
+.loading.active {
+    display: inline-flex;
+    align-items: center;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+
+/* Button Loading State */
+.btn .loading {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: var(--auth-transition);
+}
+
+.btn .loading.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.btn .btn-text {
+    transition: var(--auth-transition);
+}
+
+.btn .btn-text.d-none {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* ==========================================================================
+   11. System Information Footer
+   ========================================================================== */
+
+.auth-container + .text-center {
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.version-info {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.version-info:hover {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   12. Responsive Design
+   ========================================================================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .auth-container {
+        margin: 0 1rem;
+    }
+    
+    .auth-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .auth-body {
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-footer {
+        padding: 1.5rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .auth-container {
+        margin: 0;
+        max-width: 100%;
+    }
+    
+    .auth-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .auth-header .subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .auth-body {
+        padding: 1.5rem 1rem;
+    }
+    
+    .auth-footer {
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .auth-footer .row .col-6 {
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-primary {
+        padding: 0.75rem 1.5rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 375px) {
+    .auth-header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .auth-body .form-control,
+    .auth-body .form-select {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.9rem;
+    }
+    
+    .auth-body .btn-primary {
+        padding: 0.75rem 1rem !important;
+    }
+}
+
+/* ==========================================================================
+   13. Accessibility Enhancements
+   ========================================================================== */
+
+/* Focus States */
+.auth-body .form-control:focus,
+.auth-body .form-select:focus,
+.auth-body .btn:focus {
+    outline: 2px solid var(--ses-secondary);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .auth-card {
+        border: 2px solid #000;
+    }
+    
+    .auth-body .form-control,
+    .auth-body .form-select {
+        border: 2px solid #000;
+    }
+    
+    .auth-body .btn-primary {
+        border: 2px solid #000;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    body::before {
+        animation: none;
+    }
+    
+    .auth-header::before,
+    .auth-header::after {
+        animation: none;
+    }
+}
+
+/* ==========================================================================
+   14. Print Styles
+   ========================================================================== */
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .auth-container {
+        max-width: none;
+        margin: 0;
+    }
+    
+    .auth-card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    .auth-header {
+        background: white !important;
+        color: #000 !important;
+    }
+    
+    .auth-body .btn,
+    .loading,
+    .spinner-border {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   15. Custom Validation Styles
+   ========================================================================== */
+
+.auth-body .invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--ses-danger);
+    font-weight: 500;
+    animation: shakeError 0.5s ease-in-out;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.auth-body .valid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--ses-success);
+    font-weight: 500;
+}
+
+/* Form Text Helper */
+.auth-body .form-text {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+}
+
+.auth-body .form-text i {
+    margin-right: 0.25rem;
+    color: var(--ses-info);
+}

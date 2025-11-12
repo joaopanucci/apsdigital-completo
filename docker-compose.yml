@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apsdigital_app
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=apsdigital
+      - DB_USER=apsdigital
+      - DB_PASS=secretariaestadualdesaude2024
+      - APP_ENV=development
+      - APP_DEBUG=true
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./public/uploads:/var/www/html/public/uploads
+      - ./storage/logs:/var/www/html/storage/logs
+    networks:
+      - apsdigital_network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: apsdigital_postgres
+    environment:
+      POSTGRES_DB: apsdigital
+      POSTGRES_USER: apsdigital
+      POSTGRES_PASSWORD: secretariaestadualdesaude2024
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=pt_BR.UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/seeds:/docker-entrypoint-initdb.d/seeds
+    networks:
+      - apsdigital_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: apsdigital_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - apsdigital_network
+
+  adminer:
+    image: adminer:latest
+    container_name: apsdigital_adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    networks:
+      - apsdigital_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  apsdigital_network:
+    driver: bridge
